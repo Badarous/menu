@@ -41,7 +41,7 @@
   .etat.ferme i { background:#b8483a; animation:none; }
   @keyframes pouls { 70% { box-shadow:0 0 0 9px rgba(42,165,90,0); } 100% { box-shadow:0 0 0 0 rgba(42,165,90,0); } }
   .boutons { display:flex; gap:10px; margin-top:14px; }
-  .btn { flex:1; white-space:nowrap; display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none; padding:13px 10px; border-radius:12px; font-weight:600; font-size:14.5px; transition:transform .15s, box-shadow .2s; }
+  .btn { flex:1; min-width:0; white-space:nowrap; overflow:hidden; display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none; padding:13px 10px; border-radius:12px; font-weight:600; font-size:14.5px; transition:transform .15s, box-shadow .2s; }
   .btn:active { transform:scale(.97); }
   .btn.wa { background:var(--wa); color:#fff; box-shadow:0 6px 16px -8px rgba(31,168,85,.8); }
   .btn.yol { background:var(--carte); color:var(--encre); border:1px solid var(--ligne); }
@@ -141,7 +141,7 @@ const T = {
   pied:{tr:"Menü her gün değişir; WhatsApp'tan sorabilirsiniz. Alerjen bilgisi için lütfen bize sorun.", ru:"Меню меняется каждый день; спросите в WhatsApp. Об аллергенах спросите у нас.", de:"Das Menü wechselt täglich; fragen Sie per WhatsApp. Fragen Sie uns nach Allergenen.", en:"The menu changes every day; ask on WhatsApp. Please ask us about allergens."},
   yorum:{tr:"Google yorumu", ru:"отзывов в Google", de:"Google-Bewertungen", en:"Google reviews"},
   wa:{tr:"WhatsApp ile yaz", ru:"Написать в WhatsApp", de:"Per WhatsApp schreiben", en:"Message on WhatsApp"},
-  yol:{tr:"Yol tarifi", ru:"Как добраться", de:"Route", en:"Directions"},
+  yol:{tr:"Yol tarifi", ru:"Маршрут", de:"Route", en:"Directions"},
   acik:{tr:"Şu an açık", ru:"Сейчас открыто", de:"Jetzt geöffnet", en:"Open now"},
   kapali:{tr:"Şu an kapalı", ru:"Сейчас закрыто", de:"Jetzt geschlossen", en:"Closed now"},
   saat:{tr:"Saatler", ru:"Часы работы", de:"Öffnungszeiten", en:"Hours"},
