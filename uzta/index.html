@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>UzTa Waffle & Coffee — Menü</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --fond:#fdf3f5; --carte:#fffafb; --encre:#3a1f2a; --doux:#7d5c68; --accent:#d4466f; --vert:#25a35a; --ligne:#e8dfd3; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Inter,system-ui,sans-serif; background:var(--fond); color:var(--encre); }
+  .demo { background:#3a1f2a; color:#fff; font-size:13px; text-align:center; padding:8px 12px; }
+  header { padding:28px 20px 18px; max-width:640px; margin:auto; }
+  h1 { font-family:Lora,serif; font-size:34px; margin:0 0 4px; letter-spacing:-.5px; }
+  .sous { color:var(--doux); font-size:14px; line-height:1.6; }
+  .etoiles { color:#d99a1c; }
+  .boutons { display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; }
+  .btn { flex:1; min-width:140px; text-align:center; text-decoration:none; padding:12px 14px; border-radius:12px; font-weight:600; font-size:15px; }
+  .wa { background:var(--vert); color:#fff; }
+  .yol { background:var(--carte); color:var(--encre); border:1.5px solid var(--ligne); }
+  .langues { position:sticky; top:0; z-index:5; background:var(--fond); border-bottom:1px solid var(--ligne); }
+  .langues div { max-width:640px; margin:auto; display:flex; gap:6px; padding:10px 20px; overflow-x:auto; }
+  .langues div { scrollbar-width:none; } .langues div::-webkit-scrollbar { display:none; }
+  .langues button, .cats a { border:1.5px solid var(--ligne); background:var(--carte); color:var(--encre); border-radius:999px; padding:7px 14px; font:600 14px Inter,sans-serif; cursor:pointer; white-space:nowrap; text-decoration:none; }
+  .langues button.actif { background:var(--accent); border-color:var(--accent); color:#fff; }
+  .cats { display:flex; gap:6px; }
+  main { max-width:640px; margin:auto; padding:6px 20px 40px; }
+  h2 { font-family:Lora,serif; font-size:22px; margin:26px 0 10px; }
+  .plat { background:var(--carte); border:1px solid var(--ligne); border-radius:14px; padding:14px 16px; margin-bottom:10px; display:flex; justify-content:space-between; gap:12px; }
+  .plat b { display:block; font-size:16px; }
+  .plat p { margin:4px 0 0; color:var(--doux); font-size:14px; line-height:1.45; }
+  .prix { font-weight:700; color:var(--accent); white-space:nowrap; font-size:16px; }
+  .tag { display:inline-block; font-size:11px; font-weight:600; padding:2px 7px; border-radius:6px; margin-top:6px; margin-right:4px; background:#efe6da; color:#6b5444; }
+  .tag.vej { background:#eef5e0; color:#4f6b1f; }
+  .tag.vegan { background:#d9f0d5; color:#2b6b27; }
+  .langues button.filtre.actif { background:#2b6b27; border-color:#2b6b27; color:#fff; }
+  .vide { color:var(--doux); font-size:14px; }
+  .tag.oneri { background:#fbe9df; color:#a3461f; }
+  footer { max-width:640px; margin:auto; padding:0 20px 40px; color:var(--doux); font-size:13px; line-height:1.6; }
+  html { scroll-behavior:smooth; scroll-padding-top:64px; }
+  .cats a.ici { background:var(--encre); border-color:var(--encre); color:var(--fond); }
+  .btn, .langues button, .cats a { transition:transform .12s, background .2s, color .2s; }
+  .btn:active, .langues button:active, .cats a:active { transform:scale(.96); }
+  .plat { transition:opacity .45s ease, transform .45s ease; }
+  .plat.cache { opacity:0; transform:translateY(14px); }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } .plat, .btn, .langues button, .cats a { transition:none; } .plat.cache { opacity:1; transform:none; } }
+</style>
+</head>
+<body>
+<div class="demo" data-t="demo"></div>
+<header>
+  <h1>UzTa Waffle & Coffee</h1>
+  <div class="sous"><span class="etoiles">★★★★★</span> 5,0 · 135 Google <span data-t="yorum"></span><br><span data-t="slogan"></span><br>Fener Mah. 1946 Sk. No:24C, Muratpaşa · <span data-t="saat"></span></div>
+  <div class="boutons">
+    <a class="btn wa" href="https://wa.me/905324790785" data-t="wa"></a>
+    <a class="btn yol" href="https://www.google.com/maps/search/?api=1&query=UzTa+Waffle+%26+Tost+%26+Coffee+Antalya" data-t="yol"></a>
+  </div>
+</header>
+<nav class="langues"><div>
+  <button data-l="tr">TR</button><button data-l="en">EN</button><button data-l="de">DE</button><button data-l="ru">RU</button>
+  <button class="filtre" id="filtre" data-t="seulvegan" hidden></button>
+  <span style="width:10px"></span>
+  <span class="cats" id="cats"></span>
+</div></nav>
+<main id="menu"></main>
+<footer data-t="pied"></footer>
+<script>
+const T = {
+  demo:{tr:"Taslak: tost ve içecek fiyatları Google'daki menünüzden; waffle fiyatlarını siz eklersiniz", ru:"Черновик: цены на тосты и напитки из Google", de:"Entwurf: Toast- und Getränkepreise aus Google", en:"Draft: toast and drink prices from your Google menu"},
+  yorum:{tr:"yorum", ru:"отзывов", de:"Bewertungen", en:"reviews"},
+  slogan:{tr:"Çıtır waffle'lar, nefis kahveler, mutlu anlar.", ru:"Хрустящие вафли, вкусный кофе, счастливые моменты.", de:"Knusprige Waffeln, leckerer Kaffee, schöne Momente.", en:"Crispy waffles, great coffee, happy moments."},
+  saat:{tr:"Paket servis & gel-al", ru:"Еда с собой и доставка", de:"Zum Mitnehmen & Lieferung", en:"Takeaway & delivery"},
+  wa:{tr:"WhatsApp ile yaz", ru:"Написать в WhatsApp", de:"WhatsApp schreiben", en:"Message on WhatsApp"},
+  yol:{tr:"Yol tarifi", ru:"Как добраться", de:"Route", en:"Directions"},
+  pied:{tr:"Fiyatlara KDV dahildir. Alerjen bilgisi için lütfen bize sorun.", ru:"Цены включают НДС. Об аллергенах спросите у нас.", de:"Preise inkl. MwSt. Fragen Sie uns nach Allergenen.", en:"Prices include VAT. Please ask us about allergens."},
+  vegan:{tr:"Vegan", ru:"Веган", de:"Vegan", en:"Vegan"},
+  vej:{tr:"Vejetaryen", ru:"Вегетарианское", de:"Vegetarisch", en:"Vegetarian"},
+  aci:{tr:"Acılı", ru:"Острое", de:"Scharf", en:"Spicy"},
+  oneri:{tr:"Yanına", ru:"К этому", de:"Dazu", en:"Add"},
+  seulvegan:{tr:"🌱 Sadece vegan", ru:"🌱 Только веган", de:"🌱 Nur vegan", en:"🌱 Vegan only"},
+  vide:{tr:"Bu bölümde vegan yemek yok.", ru:"В этом разделе нет веганских блюд.", de:"In diesem Bereich gibt es keine veganen Gerichte.", en:"No vegan dishes in this section."}
+};
+const MENU = [
+  {id:"waffle", ad:{tr:"Waffle", ru:"Вафли", de:"Waffeln", en:"Waffles"}, plats:[
+    {ad:{tr:"Meyveli ve Çikolatalı Waffle", ru:"Вафля с фруктами и шоколадом", de:"Waffel mit Obst und Schokolade", en:"Fruit & Chocolate Waffle"}, d:{tr:"Çilek, muz, sütlü ve beyaz çikolata", ru:"Клубника, банан, молочный и белый шоколад", de:"Erdbeere, Banane, Milch- und weiße Schokolade", en:"Strawberry, banana, milk and white chocolate"}, p:"", t:["vej"]},
+    {ad:{tr:"Waffle Bowl (Meyveli)", ru:"Вафельная чаша с фруктами", de:"Waffel-Bowl mit Obst", en:"Waffle Bowl with Fruit"}, d:{tr:"Kâsede waffle parçaları, meyve ve çikolata sosu", ru:"Кусочки вафли, фрукты и шоколадный соус в чаше", de:"Waffelstücke, Obst und Schokosoße in der Schale", en:"Waffle pieces, fruit and chocolate sauce in a bowl"}, p:"", t:["vej"]}
+  ]},
+  {id:"tost", ad:{tr:"Tostlar", ru:"Тосты", de:"Toasts", en:"Toasties"}, plats:[
+    {ad:{tr:"Kaşarlı Tost", ru:"Тост с сыром кашар", de:"Toast mit Kaşar-Käse", en:"Kashar Cheese Toastie"}, d:{tr:"Yarım ekmek arası kaşar; isteğe göre salça, pul biber, kekik", ru:"Полбатона с сыром кашар; по желанию томатная паста, перец, тимьян", de:"Halbes Brot mit Kaşar; auf Wunsch Tomatenmark, Chili, Thymian", en:"Half-loaf with kashar cheese; tomato paste, chilli flakes, thyme on request"}, p:220, t:["vej"]},
+    {ad:{tr:"Sucuklu Tost", ru:"Тост с суджуком", de:"Sucuk-Toast", en:"Sucuk Toastie"}, d:{tr:"Dana sucuk", ru:"Говяжий суджук", de:"Rinder-Sucuk", en:"Beef sucuk sausage"}, p:220, t:["aci"]},
+    {ad:{tr:"Peynirli Tost", ru:"Тост с белым сыром", de:"Toast mit Weißkäse", en:"White Cheese Toastie"}, d:{tr:"Beyaz peynir, domates", ru:"Белый сыр, помидор", de:"Weißkäse, Tomate", en:"White cheese, tomato"}, p:250, t:["vej"]},
+    {ad:{tr:"Çift Kaşarlı Tost", ru:"Тост с двойным сыром", de:"Toast mit doppeltem Käse", en:"Double Cheese Toastie"}, d:{tr:"Bol kaşar peyniri", ru:"Много сыра кашар", de:"Extra viel Kaşar", en:"Extra kashar cheese"}, p:250, t:["vej"]},
+    {ad:{tr:"Sucuklu Kaşarlı Tost", ru:"Тост с суджуком и сыром", de:"Toast mit Sucuk und Käse", en:"Sucuk & Cheese Toastie"}, d:{tr:"Dana sucuk, kaşar peyniri", ru:"Говяжий суджук, сыр кашар", de:"Rinder-Sucuk, Kaşar", en:"Beef sucuk, kashar cheese"}, p:280, t:[]}
+  ]},
+  {id:"icecek", ad:{tr:"İçecekler", ru:"Напитки", de:"Getränke", en:"Drinks"}, plats:[
+    {ad:{tr:"Ayran", ru:"Айран", de:"Ayran", en:"Ayran"}, d:{tr:"Büyük boy, 30 cl", ru:"Большой, 30 мл", de:"Groß, 30 cl", en:"Large, 30 cl"}, p:50, t:[]},
+    {ad:{tr:"Coca-Cola / Zero / Fanta / Sprite", ru:"Coca-Cola / Zero / Fanta / Sprite", de:"Coca-Cola / Zero / Fanta / Sprite", en:"Coca-Cola / Zero / Fanta / Sprite"}, d:{tr:"Kutu, 33 cl", ru:"Банка, 33 мл", de:"Dose, 33 cl", en:"Can, 33 cl"}, p:80, t:[]},
+    {ad:{tr:"Fuse Tea", ru:"Fuse Tea", de:"Fuse Tea", en:"Fuse Tea"}, d:{tr:"Kutu, 33 cl", ru:"Банка, 33 мл", de:"Dose, 33 cl", en:"Can, 33 cl"}, p:80, t:[]},
+    {ad:{tr:"Meyveli Soda", ru:"Фруктовая минералка", de:"Frucht-Mineralwasser", en:"Fruit Soda Water"}, d:{tr:"Cam şişe, 20 cl", ru:"Стекло, 20 мл", de:"Glasflasche, 20 cl", en:"Glass bottle, 20 cl"}, p:70, t:[]},
+    {ad:{tr:"Soda", ru:"Минеральная вода", de:"Mineralwasser", en:"Soda Water"}, d:{tr:"Cam şişe, 20 cl", ru:"Стекло, 20 мл", de:"Glasflasche, 20 cl", en:"Glass bottle, 20 cl"}, p:50, t:[]},
+    {ad:{tr:"Su", ru:"Вода", de:"Wasser", en:"Water"}, d:{tr:"50 cl", ru:"50 мл", de:"50 cl", en:"50 cl"}, p:20, t:[]}
+  ]}
+];
+let L = "tr", V = false;
+function rendre() {
+  document.documentElement.lang = L;
+  document.querySelectorAll("[data-t]").forEach(e => e.textContent = T[e.dataset.t][L]);
+  document.querySelectorAll("[data-l]").forEach(b => b.classList.toggle("actif", b.dataset.l === L));
+  document.getElementById("filtre").classList.toggle("actif", V);
+  document.getElementById("cats").innerHTML = MENU.map(c => `<a href="#${c.id}">${c.ad[L]}</a>`).join("");
+  document.getElementById("menu").innerHTML = MENU.map(c => {
+    const ps = c.plats.filter(p => !V || p.t.includes("vegan"));
+    return `<h2 id="${c.id}">${c.ad[L]}</h2>` + (ps.length ? ps.map(p =>
+      `<div class="plat"><div><b>${p.ad[L]}</b><p>${p.d[L]}</p>${p.t.map(t => `<span class="tag ${t}">${T[t][L]}</span>`).join("")}${p.o ? `<span class="tag oneri">+ ${T.oneri[L]}: ${p.o[L]} ${p.op} ₺</span>` : ""}</div><div class="prix">${p.p ? p.p + " ₺" : ""}</div></div>`).join("") : `<p class="vide">${T.vide[L]}</p>`);
+  }).join("");
+}
+document.querySelectorAll("[data-l]").forEach(b => b.onclick = () => { L = b.dataset.l; rendre(); });
+document.getElementById("filtre").onclick = () => { V = !V; rendre(); };
+rendre();
+// vivant : apparition douce des plats + catégorie en cours allumée
+const vu = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.remove("cache"); vu.unobserve(e.target); } }), {rootMargin:"0px 0px -8% 0px"});
+function animer() { document.querySelectorAll(".plat").forEach(p => { if (p.getBoundingClientRect().top > innerHeight) { p.classList.add("cache"); vu.observe(p); } }); }
+function ici() {
+  let id = MENU[0].id;
+  MENU.forEach(c => { const h = document.getElementById(c.id); if (h && h.getBoundingClientRect().top < 120) id = c.id; });
+  document.querySelectorAll(".cats a").forEach(a => { const on = a.getAttribute("href") === "#" + id; if (on && scrollY > 50 && !a.classList.contains("ici")) a.scrollIntoView({block:"nearest", inline:"center"}); a.classList.toggle("ici", on); });
+}
+const rendre0 = rendre; rendre = function () { rendre0(); animer(); ici(); };
+addEventListener("scroll", ici, {passive:true});
+animer(); ici();
+</script>
+</body>
+</html>
