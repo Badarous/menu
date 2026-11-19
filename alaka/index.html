@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Alâka — Menü</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --fond:#f3f5ee; --carte:#fdfefb; --encre:#1f2a1c; --doux:#5f6b58; --accent:#3f7d3a; --vert:#25a35a; --ligne:#e8dfd3; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Inter,system-ui,sans-serif; background:var(--fond); color:var(--encre); }
+  .demo { background:#1f2a1c; color:#f3f5ee; font-size:13px; text-align:center; padding:8px 12px; }
+  header { padding:28px 20px 18px; max-width:640px; margin:auto; }
+  h1 { font-family:Lora,serif; font-size:34px; margin:0 0 4px; letter-spacing:-.5px; }
+  .sous { color:var(--doux); font-size:14px; line-height:1.6; }
+  .etoiles { color:#d99a1c; }
+  .boutons { display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; }
+  .btn { flex:1; min-width:140px; text-align:center; text-decoration:none; padding:12px 14px; border-radius:12px; font-weight:600; font-size:15px; }
+  .wa { background:var(--vert); color:#fff; }
+  .yol { background:var(--carte); color:var(--encre); border:1.5px solid var(--ligne); }
+  .langues { position:sticky; top:0; z-index:5; background:var(--fond); border-bottom:1px solid var(--ligne); }
+  .langues div { max-width:640px; margin:auto; display:flex; gap:6px; padding:10px 20px; overflow-x:auto; }
+  .langues div { scrollbar-width:none; } .langues div::-webkit-scrollbar { display:none; }
+  .langues button, .cats a { border:1.5px solid var(--ligne); background:var(--carte); color:var(--encre); border-radius:999px; padding:7px 14px; font:600 14px Inter,sans-serif; cursor:pointer; white-space:nowrap; text-decoration:none; }
+  .langues button.actif { background:var(--accent); border-color:var(--accent); color:#fff; }
+  .cats { display:flex; gap:6px; }
+  main { max-width:640px; margin:auto; padding:6px 20px 40px; }
+  h2 { font-family:Lora,serif; font-size:22px; margin:26px 0 10px; }
+  .plat { background:var(--carte); border:1px solid var(--ligne); border-radius:14px; padding:14px 16px; margin-bottom:10px; display:flex; justify-content:space-between; gap:12px; }
+  .plat b { display:block; font-size:16px; }
+  .plat p { margin:4px 0 0; color:var(--doux); font-size:14px; line-height:1.45; }
+  .prix { font-weight:700; color:var(--accent); white-space:nowrap; font-size:16px; }
+  .tag { display:inline-block; font-size:11px; font-weight:600; padding:2px 7px; border-radius:6px; margin-top:6px; margin-right:4px; background:#efe6da; color:#6b5444; }
+  .tag.vej { background:#eef5e0; color:#4f6b1f; }
+  .tag.vegan { background:#d9f0d5; color:#2b6b27; }
+  .langues button.filtre.actif { background:#2b6b27; border-color:#2b6b27; color:#fff; }
+  .vide { color:var(--doux); font-size:14px; }
+  .tag.oneri { background:#fbe9df; color:#a3461f; }
+  footer { max-width:640px; margin:auto; padding:0 20px 40px; color:var(--doux); font-size:13px; line-height:1.6; }
+</style>
+</head>
+<body>
+<div class="demo" data-t="demo"></div>
+<header>
+  <h1>Alâka</h1>
+  <div class="sous"><span class="etoiles">★★★★★</span> 4,9 · 110 Google <span data-t="yorum"></span><br><span data-t="slogan"></span><br>Meydankavağı, Muratpaşa · <span data-t="saat"></span></div>
+  <div class="boutons">
+    <a class="btn wa" href="https://wa.me/905431090700" data-t="wa"></a>
+    <a class="btn yol" href="https://maps.google.com/?cid=11256545085331633576" data-t="yol"></a>
+  </div>
+</header>
+<nav class="langues"><div>
+  <button data-l="tr">TR</button><button data-l="en">EN</button><button data-l="de">DE</button><button data-l="ru">RU</button>
+  <button class="filtre" id="filtre" data-t="seulvegan"></button>
+  <span style="width:10px"></span>
+  <span class="cats" id="cats"></span>
+</div></nav>
+<main id="menu"></main>
+<footer data-t="pied"></footer>
+<script>
+const T = {
+  demo:{tr:"Taslak: fiyatlar örnektir, menünüzü gönderirseniz gerçek fiyatlarla güncellenir", ru:"Черновик: цены примерные", de:"Entwurf: Preise sind Beispiele", en:"Draft: prices are examples"},
+  yorum:{tr:"yorum", ru:"отзывов", de:"Bewertungen", en:"reviews"},
+  slogan:{tr:"Her şey ev yapımı, taze ve günlük. Vegan seçenekler bol.", ru:"Всё домашнее, свежее, каждый день. Много веганских блюд.", de:"Alles hausgemacht, frisch und täglich. Viele vegane Gerichte.", en:"Everything homemade, fresh, every day. Plenty of vegan options."},
+  saat:{tr:"13:30'dan itibaren açık", ru:"открыто с 13:30", de:"geöffnet ab 13:30", en:"open from 13:30"},
+  wa:{tr:"WhatsApp ile yaz", ru:"Написать в WhatsApp", de:"WhatsApp schreiben", en:"Message on WhatsApp"},
+  yol:{tr:"Yol tarifi", ru:"Как добраться", de:"Route", en:"Directions"},
+  pied:{tr:"Fiyatlara KDV dahildir. Tüm yemekler siparişle taze hazırlanır. Alerjen bilgisi için lütfen bize sorun.", ru:"Цены включают НДС. Всё готовится свежим под заказ. Об аллергенах спросите у нас.", de:"Preise inkl. MwSt. Alles wird frisch auf Bestellung zubereitet. Fragen Sie uns nach Allergenen.", en:"Prices include VAT. Everything is made fresh to order. Please ask us about allergens."},
+  vegan:{tr:"Vegan", ru:"Веган", de:"Vegan", en:"Vegan"},
+  vej:{tr:"Vejetaryen", ru:"Вегетарианское", de:"Vegetarisch", en:"Vegetarian"},
+  aci:{tr:"Acılı", ru:"Острое", de:"Scharf", en:"Spicy"},
+  oneri:{tr:"Yanına", ru:"К этому", de:"Dazu", en:"Add"},
+  seulvegan:{tr:"🌱 Sadece vegan", ru:"🌱 Только веган", de:"🌱 Nur vegan", en:"🌱 Vegan only"},
+  vide:{tr:"Bu bölümde vegan yemek yok.", ru:"В этом разделе нет веганских блюд.", de:"In diesem Bereich gibt es keine veganen Gerichte.", en:"No vegan dishes in this section."}
+};
+const MENU = [
+  {id:"burger", ad:{tr:"Burgerler", ru:"Бургеры", de:"Burger", en:"Burgers"}, plats:[
+    {ad:{tr:"Vegan Burger", ru:"Веганский бургер", de:"Veganer Burger", en:"Vegan Burger"}, d:{tr:"Ev yapımı sebze köftesi, taze sebzeler, vegan sos; patates kızartması ile", ru:"Домашняя овощная котлета, свежие овощи, веганский соус; с картофелем фри", de:"Hausgemachtes Gemüse-Patty, frisches Gemüse, vegane Soße; mit Pommes", en:"Homemade veggie patty, fresh vegetables, vegan sauce; with fries"}, p:380, t:["vegan"], o:{tr:"Ev yapımı limonata", ru:"Домашний лимонад", de:"Hausgemachte Limonade", en:"Homemade lemonade"}, op:90},
+    {ad:{tr:"Klasik Burger", ru:"Классический бургер", de:"Klassischer Burger", en:"Classic Burger"}, d:{tr:"Dana köfte, cheddar, karamelize soğan; patates kızartması ile", ru:"Говяжья котлета, чеддер, карамелизированный лук; с картофелем фри", de:"Rindfleisch-Patty, Cheddar, karamellisierte Zwiebeln; mit Pommes", en:"Beef patty, cheddar, caramelised onion; with fries"}, p:420, t:[], o:{tr:"Çilekli milkshake", ru:"Клубничный милкшейк", de:"Erdbeer-Milchshake", en:"Strawberry milkshake"}, op:160},
+    {ad:{tr:"Tavuk Burger", ru:"Бургер с курицей", de:"Hähnchen-Burger", en:"Chicken Burger"}, d:{tr:"Izgara tavuk, marul, ev yapımı acılı sos", ru:"Курица на гриле, салат, домашний острый соус", de:"Gegrilltes Hähnchen, Salat, hausgemachte scharfe Soße", en:"Grilled chicken, lettuce, homemade spicy sauce"}, p:360, t:["aci"]}
+  ]},
+  {id:"wrap", ad:{tr:"Dürüm & Wrap", ru:"Роллы", de:"Wraps", en:"Wraps"}, plats:[
+    {ad:{tr:"Vegan Wrap", ru:"Веганский ролл", de:"Veganer Wrap", en:"Vegan Wrap"}, d:{tr:"Humus, közlenmiş sebzeler, yeşillik", ru:"Хумус, печёные овощи, зелень", de:"Hummus, Grillgemüse, Blattsalat", en:"Hummus, roasted vegetables, greens"}, p:300, t:["vegan"]},
+    {ad:{tr:"Tavuk Wrap", ru:"Ролл с курицей", de:"Hähnchen-Wrap", en:"Chicken Wrap"}, d:{tr:"Izgara tavuk, yoğurtlu sos, salata", ru:"Курица на гриле, йогуртовый соус, салат", de:"Gegrilltes Hähnchen, Joghurtsoße, Salat", en:"Grilled chicken, yoghurt sauce, salad"}, p:320, t:[]}
+  ]},
+  {id:"ev", ad:{tr:"Ev Yemekleri", ru:"Домашние блюда", de:"Hausgerichte", en:"Home-Cooked Dishes"}, plats:[
+    {ad:{tr:"Günün Yemeği", ru:"Блюдо дня", de:"Tagesgericht", en:"Dish of the Day"}, d:{tr:"Her gün farklı, ev usulü; pilav ve salata ile", ru:"Каждый день новое, по-домашнему; с рисом и салатом", de:"Jeden Tag anders, nach Hausart; mit Reis und Salat", en:"Different every day, home-style; with rice and salad"}, p:280, t:[]},
+    {ad:{tr:"Vegan Mercimek Köftesi", ru:"Веганские котлетки из чечевицы", de:"Vegane Linsenbällchen", en:"Vegan Lentil Balls"}, d:{tr:"Marul ve limon ile", ru:"С салатом и лимоном", de:"Mit Salat und Zitrone", en:"With lettuce and lemon"}, p:220, t:["vegan"]}
+  ]},
+  {id:"yan", ad:{tr:"Yan Lezzetler", ru:"Гарниры", de:"Beilagen", en:"Sides"}, plats:[
+    {ad:{tr:"Patates Kızartması", ru:"Картофель фри", de:"Pommes", en:"French Fries"}, d:{tr:"Çıtır, taze kesim", ru:"Хрустящий, свежая нарезка", de:"Knusprig, frisch geschnitten", en:"Crispy, freshly cut"}, p:120, t:["vegan"]},
+    {ad:{tr:"Mevsim Salatası", ru:"Сезонный салат", de:"Saisonsalat", en:"Seasonal Salad"}, d:{tr:"Zeytinyağı ve nar ekşisi ile", ru:"С оливковым маслом и гранатовым соусом", de:"Mit Olivenöl und Granatapfelsirup", en:"With olive oil and pomegranate molasses"}, p:180, t:["vegan"]}
+  ]},
+  {id:"icecek", ad:{tr:"İçecekler", ru:"Напитки", de:"Getränke", en:"Drinks"}, plats:[
+    {ad:{tr:"Çilekli Milkshake", ru:"Клубничный милкшейк", de:"Erdbeer-Milchshake", en:"Strawberry Milkshake"}, d:{tr:"Misafirlerimizin favorisi", ru:"Любимый напиток наших гостей", de:"Der Liebling unserer Gäste", en:"Our guests' favourite"}, p:160, t:["vej"]},
+    {ad:{tr:"Ev Yapımı Limonata", ru:"Домашний лимонад", de:"Hausgemachte Limonade", en:"Homemade Lemonade"}, d:{tr:"Taze nane ile", ru:"Со свежей мятой", de:"Mit frischer Minze", en:"With fresh mint"}, p:90, t:["vegan"]},
+    {ad:{tr:"Türk Kahvesi", ru:"Турецкий кофе", de:"Türkischer Kaffee", en:"Turkish Coffee"}, d:{tr:"Lokum ile", ru:"С лукумом", de:"Mit Lokum", en:"With Turkish delight"}, p:90, t:["vegan"]},
+    {ad:{tr:"Çay", ru:"Чай", de:"Tee", en:"Turkish Tea"}, d:{tr:"İnce belli bardakta", ru:"В турецком стаканчике", de:"Im Tulpenglas", en:"In a tulip glass"}, p:25, t:["vegan"]}
+  ]}
+];
+let L = "tr", V = false;
+function rendre() {
+  document.documentElement.lang = L;
+  document.querySelectorAll("[data-t]").forEach(e => e.textContent = T[e.dataset.t][L]);
+  document.querySelectorAll("[data-l]").forEach(b => b.classList.toggle("actif", b.dataset.l === L));
+  document.getElementById("filtre").classList.toggle("actif", V);
+  document.getElementById("cats").innerHTML = MENU.map(c => `<a href="#${c.id}">${c.ad[L]}</a>`).join("");
+  document.getElementById("menu").innerHTML = MENU.map(c => {
+    const ps = c.plats.filter(p => !V || p.t.includes("vegan"));
+    return `<h2 id="${c.id}">${c.ad[L]}</h2>` + (ps.length ? ps.map(p =>
+      `<div class="plat"><div><b>${p.ad[L]}</b><p>${p.d[L]}</p>${p.t.map(t => `<span class="tag ${t}">${T[t][L]}</span>`).join("")}${p.o ? `<span class="tag oneri">+ ${T.oneri[L]}: ${p.o[L]} ${p.op} ₺</span>` : ""}</div><div class="prix">${p.p} ₺</div></div>`).join("") : `<p class="vide">${T.vide[L]}</p>`);
+  }).join("");
+}
+document.querySelectorAll("[data-l]").forEach(b => b.onclick = () => { L = b.dataset.l; rendre(); });
+document.getElementById("filtre").onclick = () => { V = !V; rendre(); };
+rendre();
+</script>
+</body>
+</html>
