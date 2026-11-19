@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Ada Cafe &amp; Ev Yemekleri — Menü</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --fond:#f4f1e8; --carte:#fffdf7; --encre:#1f2b24; --doux:#5f6a60; --accent:#2f6b4a; --vert:#25a35a; --ligne:#e8dfd3; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Inter,system-ui,sans-serif; background:var(--fond); color:var(--encre); }
+  .demo { background:#1f2b24; color:#fff; font-size:13px; text-align:center; padding:8px 12px; }
+  header { padding:28px 20px 18px; max-width:640px; margin:auto; }
+  h1 { font-family:Lora,serif; font-size:34px; margin:0 0 4px; letter-spacing:-.5px; }
+  .sous { color:var(--doux); font-size:14px; line-height:1.6; }
+  .etoiles { color:#d99a1c; }
+  .boutons { display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; }
+  .btn { flex:1; min-width:140px; text-align:center; text-decoration:none; padding:12px 14px; border-radius:12px; font-weight:600; font-size:15px; }
+  .wa { background:var(--vert); color:#fff; }
+  .yol { background:var(--carte); color:var(--encre); border:1.5px solid var(--ligne); }
+  .langues { position:sticky; top:0; z-index:5; background:var(--fond); border-bottom:1px solid var(--ligne); }
+  .langues div { max-width:640px; margin:auto; display:flex; gap:6px; padding:10px 20px; overflow-x:auto; }
+  .langues div { scrollbar-width:none; } .langues div::-webkit-scrollbar { display:none; }
+  .langues button, .cats a { border:1.5px solid var(--ligne); background:var(--carte); color:var(--encre); border-radius:999px; padding:7px 14px; font:600 14px Inter,sans-serif; cursor:pointer; white-space:nowrap; text-decoration:none; }
+  .langues button.actif { background:var(--accent); border-color:var(--accent); color:#fff; }
+  .cats { display:flex; gap:6px; }
+  main { max-width:640px; margin:auto; padding:6px 20px 40px; }
+  h2 { font-family:Lora,serif; font-size:22px; margin:26px 0 10px; }
+  .plat { background:var(--carte); border:1px solid var(--ligne); border-radius:14px; padding:14px 16px; margin-bottom:10px; display:flex; justify-content:space-between; gap:12px; }
+  .plat b { display:block; font-size:16px; }
+  .plat p { margin:4px 0 0; color:var(--doux); font-size:14px; line-height:1.45; }
+  .prix { font-weight:700; color:var(--accent); white-space:nowrap; font-size:16px; }
+  .tag { display:inline-block; font-size:11px; font-weight:600; padding:2px 7px; border-radius:6px; margin-top:6px; margin-right:4px; background:#efe6da; color:#6b5444; }
+  .tag.vej { background:#eef5e0; color:#4f6b1f; }
+  .tag.vegan { background:#d9f0d5; color:#2b6b27; }
+  .langues button.filtre.actif { background:#2b6b27; border-color:#2b6b27; color:#fff; }
+  .vide { color:var(--doux); font-size:14px; }
+  .tag.oneri { background:#fbe9df; color:#a3461f; }
+  footer { max-width:640px; margin:auto; padding:0 20px 40px; color:var(--doux); font-size:13px; line-height:1.6; }
+  html { scroll-behavior:smooth; scroll-padding-top:64px; }
+  .cats a.ici { background:var(--encre); border-color:var(--encre); color:var(--fond); }
+  .btn, .langues button, .cats a { transition:transform .12s, background .2s, color .2s; }
+  .btn:active, .langues button:active, .cats a:active { transform:scale(.96); }
+  .plat { transition:opacity .45s ease, transform .45s ease; }
+  .plat.cache { opacity:0; transform:translateY(14px); }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } .plat, .btn, .langues button, .cats a { transition:none; } .plat.cache { opacity:1; transform:none; } }
+</style>
+</head>
+<body>
+<div class="demo" data-t="demo"></div>
+<header>
+  <h1>Ada Cafe &amp; Ev Yemekleri</h1>
+  <div class="sous"><span class="etoiles">★★★★★</span> 4,8 · 182 Google <span data-t="yorum"></span><br><span data-t="slogan"></span><br>Sinan, 1289. Sk. 3a, Muratpaşa · <span data-t="saat"></span></div>
+  <div class="boutons">
+    <a class="btn wa" href="https://wa.me/905304040232" data-t="wa"></a>
+    <a class="btn yol" href="https://www.google.com/maps/search/?api=1&query=Ada+Cafe+Ev+Yemekleri+Antalya" data-t="yol"></a>
+  </div>
+</header>
+<nav class="langues"><div>
+  <button data-l="tr">TR</button><button data-l="en">EN</button><button data-l="de">DE</button><button data-l="ru">RU</button>
+  <button class="filtre" id="filtre" data-t="seulvegan"></button>
+  <span style="width:10px"></span>
+  <span class="cats" id="cats"></span>
+</div></nav>
+<main id="menu"></main>
+<footer data-t="pied"></footer>
+<script>
+const T = {
+  demo:{tr:"Taslak: fiyatlar Google'daki menünüzden alındı", ru:"Черновик: цены взяты из вашего меню в Google", de:"Entwurf: Preise aus Ihrem Google-Menü", en:"Draft: prices taken from your Google menu"},
+  yorum:{tr:"yorum", ru:"отзывов", de:"Bewertungen", en:"reviews"},
+  slogan:{tr:"Her gün taze ev yemekleri: çorbalar, menüler, zeytinyağlılar.", ru:"Каждый день свежая домашняя еда: супы, меню, блюда на оливковом масле.", de:"Jeden Tag frische Hausmannskost: Suppen, Menüs, Olivenöl-Gerichte.", en:"Fresh home cooking every day: soups, set menus, olive-oil dishes."},
+  saat:{tr:"Ev yemekleri", ru:"Домашняя кухня", de:"Hausmannskost", en:"Home cooking"},
+  wa:{tr:"WhatsApp ile yaz", ru:"Написать в WhatsApp", de:"WhatsApp schreiben", en:"Message on WhatsApp"},
+  yol:{tr:"Yol tarifi", ru:"Как добраться", de:"Route", en:"Directions"},
+  pied:{tr:"Günün menüsü her gün değişir; WhatsApp'tan sorabilirsiniz. Alerjen bilgisi için lütfen bize sorun.", ru:"Меню дня меняется каждый день; спросите в WhatsApp. Об аллергенах спросите у нас.", de:"Das Tagesmenü wechselt täglich; fragen Sie per WhatsApp. Fragen Sie uns nach Allergenen.", en:"The daily menu changes every day; ask on WhatsApp. Please ask us about allergens."},
+  vegan:{tr:"Vegan", ru:"Веган", de:"Vegan", en:"Vegan"},
+  vej:{tr:"Vejetaryen", ru:"Вегетарианское", de:"Vegetarisch", en:"Vegetarian"},
+  aci:{tr:"Acılı", ru:"Острое", de:"Scharf", en:"Spicy"},
+  oneri:{tr:"Yanına", ru:"К этому", de:"Dazu", en:"Add"},
+  seulvegan:{tr:"🌱 Sadece vegan", ru:"🌱 Только веган", de:"🌱 Nur vegan", en:"🌱 Vegan only"},
+  vide:{tr:"Bu bölümde vegan yemek yok.", ru:"В этом разделе нет веганских блюд.", de:"In diesem Bereich gibt es keine veganen Gerichte.", en:"No vegan dishes in this section."}
+};
+const MENU = [
+  {id:"corba", ad:{tr:"Çorbalar", ru:"Супы", de:"Suppen", en:"Soups"}, plats:[
+    {ad:{tr:"Terbiyeli Tavuk Çorbası", ru:"Куриный суп с яично-лимонной заправкой", de:"Hühnersuppe mit Ei-Zitronen-Sauce", en:"Chicken Soup with Egg-Lemon"}, d:{tr:"", ru:"", de:"", en:""}, p:"100", t:[]},
+    {ad:{tr:"Mercimek Çorbası", ru:"Чечевичный суп", de:"Linsensuppe", en:"Lentil Soup"}, d:{tr:"", ru:"", de:"", en:""}, p:"100", t:["vegan"]}
+  ]},
+  {id:"menuler", ad:{tr:"Menüler", ru:"Комплексные меню", de:"Menüs", en:"Set Menus"}, plats:[
+    {ad:{tr:"Kavurma Menüsü", ru:"Меню с кавурмой", de:"Kavurma-Menü", en:"Kavurma Menu"}, d:{tr:"Pilav üstü kavurma + salata", ru:"Жареная говядина на рисе + салат", de:"Gebratenes Rindfleisch auf Reis + Salat", en:"Pan-fried beef on rice + salad"}, p:"300", t:[]},
+    {ad:{tr:"Tavuk Menüsü", ru:"Куриное меню", de:"Hähnchen-Menü", en:"Chicken Menu"}, d:{tr:"Tavuk yemeği + pilav + salata", ru:"Курица + рис + салат", de:"Hähnchengericht + Reis + Salat", en:"Chicken dish + rice + salad"}, p:"280", t:[]},
+    {ad:{tr:"Sebze Menüsü", ru:"Овощное меню", de:"Gemüse-Menü", en:"Vegetable Menu"}, d:{tr:"Sebze yemeği + pilav + salata", ru:"Овощное блюдо + рис + салат", de:"Gemüsegericht + Reis + Salat", en:"Vegetable dish + rice + salad"}, p:"250", t:[]},
+    {ad:{tr:"Etli Menü", ru:"Мясное меню", de:"Fleisch-Menü", en:"Meat Menu"}, d:{tr:"Günün etli yemeği ile", ru:"С мясным блюдом дня", de:"Mit dem Fleischgericht des Tages", en:"With the meat dish of the day"}, p:"300", t:[]}
+  ]},
+  {id:"ana", ad:{tr:"Ana Yemekler", ru:"Основные блюда", de:"Hauptgerichte", en:"Main Dishes"}, plats:[
+    {ad:{tr:"Çökertme Kebabı", ru:"Кебаб чёкертме", de:"Çökertme-Kebab", en:"Çökertme Kebab"}, d:{tr:"Çıtır patates üzerinde et, yoğurt ile", ru:"Мясо на хрустящем картофеле, с йогуртом", de:"Fleisch auf knusprigen Kartoffeln, mit Joghurt", en:"Beef on crispy potatoes, with yoghurt"}, p:"200", t:[]},
+    {ad:{tr:"Dana Kavurma (110 g)", ru:"Жареная говядина (110 г)", de:"Rinder-Kavurma (110 g)", en:"Beef Kavurma (110 g)"}, d:{tr:"", ru:"", de:"", en:""}, p:"315", t:[]},
+    {ad:{tr:"Fırında Tavuk Kanat", ru:"Куриные крылья из печи", de:"Hähnchenflügel aus dem Ofen", en:"Oven-Baked Chicken Wings"}, d:{tr:"", ru:"", de:"", en:""}, p:"175", t:[]},
+    {ad:{tr:"Tavuk Sote", ru:"Курица соте", de:"Hähnchen-Sauté", en:"Chicken Sauté"}, d:{tr:"", ru:"", de:"", en:""}, p:"175", t:[]},
+    {ad:{tr:"Yoğurtlu Mantı", ru:"Манты с йогуртом", de:"Mantı mit Joghurt", en:"Mantı with Yoghurt"}, d:{tr:"", ru:"", de:"", en:""}, p:"200", t:[]}
+  ]},
+  {id:"zeytinyagli", ad:{tr:"Zeytinyağlılar", ru:"Блюда на оливковом масле", de:"Olivenöl-Gerichte", en:"Olive Oil Dishes"}, plats:[
+    {ad:{tr:"Acılı Patlıcan", ru:"Острые баклажаны", de:"Scharfe Aubergine", en:"Spicy Aubergine"}, d:{tr:"", ru:"", de:"", en:""}, p:"140", t:["vegan"]},
+    {ad:{tr:"Kabak Dolması", ru:"Фаршированные кабачки", de:"Gefüllte Zucchini", en:"Stuffed Courgette"}, d:{tr:"", ru:"", de:"", en:""}, p:"140", t:[]},
+    {ad:{tr:"Pırasa", ru:"Лук-порей", de:"Lauch", en:"Leeks"}, d:{tr:"", ru:"", de:"", en:""}, p:"140", t:["vegan"]},
+    {ad:{tr:"Yoğurtlu Makarna", ru:"Макароны с йогуртом", de:"Nudeln mit Joghurt", en:"Pasta with Yoghurt"}, d:{tr:"", ru:"", de:"", en:""}, p:"100", t:[]}
+  ]},
+  {id:"pilav", ad:{tr:"Pilavlar", ru:"Плов", de:"Reis & Bulgur", en:"Rice & Bulgur"}, plats:[
+    {ad:{tr:"Pirinç Pilavı", ru:"Рисовый плов", de:"Reis-Pilaw", en:"Rice Pilaf"}, d:{tr:"", ru:"", de:"", en:""}, p:"75", t:[]},
+    {ad:{tr:"Domatesli Bulgur Pilavı", ru:"Булгур с томатами", de:"Bulgur mit Tomaten", en:"Tomato Bulgur Pilaf"}, d:{tr:"", ru:"", de:"", en:""}, p:"75", t:["vegan"]}
+  ]},
+  {id:"tatli", ad:{tr:"Tatlılar", ru:"Десерты", de:"Desserts", en:"Desserts"}, plats:[
+    {ad:{tr:"Fırında Sütlaç", ru:"Рисовый пудинг из печи", de:"Ofen-Milchreis", en:"Baked Rice Pudding"}, d:{tr:"", ru:"", de:"", en:""}, p:"95", t:[]},
+    {ad:{tr:"Kabak Tatlısı", ru:"Тыквенный десерт", de:"Kürbis-Dessert", en:"Candied Pumpkin"}, d:{tr:"", ru:"", de:"", en:""}, p:"110", t:[]},
+    {ad:{tr:"Kıbrıs Tatlısı", ru:"Кипрский десерт", de:"Zypern-Dessert", en:"Cyprus Dessert"}, d:{tr:"", ru:"", de:"", en:""}, p:"110", t:[]}
+  ]},
+  {id:"yan", ad:{tr:"Yan Ürünler & İçecekler", ru:"Гарниры и напитки", de:"Beilagen & Getränke", en:"Sides & Drinks"}, plats:[
+    {ad:{tr:"Mevsim Salatası", ru:"Сезонный салат", de:"Saisonsalat", en:"Seasonal Salad"}, d:{tr:"", ru:"", de:"", en:""}, p:"50", t:["vegan"]},
+    {ad:{tr:"Cacık", ru:"Джаджик", de:"Cacık", en:"Cacık"}, d:{tr:"", ru:"", de:"", en:""}, p:"70", t:[]},
+    {ad:{tr:"Yoğurt", ru:"Йогурт", de:"Joghurt", en:"Yoghurt"}, d:{tr:"", ru:"", de:"", en:""}, p:"50", t:[]},
+    {ad:{tr:"Ayran", ru:"Айран", de:"Ayran", en:"Ayran"}, d:{tr:"", ru:"", de:"", en:""}, p:"25", t:[]}
+  ]}
+];
+let L = "tr", V = false;
+function rendre() {
+  document.documentElement.lang = L;
+  document.querySelectorAll("[data-t]").forEach(e => e.textContent = T[e.dataset.t][L]);
+  document.querySelectorAll("[data-l]").forEach(b => b.classList.toggle("actif", b.dataset.l === L));
+  document.getElementById("filtre").classList.toggle("actif", V);
+  document.getElementById("cats").innerHTML = MENU.map(c => `<a href="#${c.id}">${c.ad[L]}</a>`).join("");
+  document.getElementById("menu").innerHTML = MENU.map(c => {
+    const ps = c.plats.filter(p => !V || p.t.includes("vegan"));
+    return `<h2 id="${c.id}">${c.ad[L]}</h2>` + (ps.length ? ps.map(p =>
+      `<div class="plat"><div><b>${p.ad[L]}</b><p>${p.d[L]}</p>${p.t.map(t => `<span class="tag ${t}">${T[t][L]}</span>`).join("")}${p.o ? `<span class="tag oneri">+ ${T.oneri[L]}: ${p.o[L]} ${p.op} ₺</span>` : ""}</div><div class="prix">${p.p ? p.p + " ₺" : ""}</div></div>`).join("") : `<p class="vide">${T.vide[L]}</p>`);
+  }).join("");
+}
+document.querySelectorAll("[data-l]").forEach(b => b.onclick = () => { L = b.dataset.l; rendre(); });
+document.getElementById("filtre").onclick = () => { V = !V; rendre(); };
+rendre();
+// vivant : apparition douce des plats + catégorie en cours allumée
+const vu = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.remove("cache"); vu.unobserve(e.target); } }), {rootMargin:"0px 0px -8% 0px"});
+function animer() { document.querySelectorAll(".plat").forEach(p => { if (p.getBoundingClientRect().top > innerHeight) { p.classList.add("cache"); vu.observe(p); } }); }
+function ici() {
+  let id = MENU[0].id;
+  MENU.forEach(c => { const h = document.getElementById(c.id); if (h && h.getBoundingClientRect().top < 120) id = c.id; });
+  document.querySelectorAll(".cats a").forEach(a => { const on = a.getAttribute("href") === "#" + id; if (on && scrollY > 50 && !a.classList.contains("ici")) a.scrollIntoView({block:"nearest", inline:"center"}); a.classList.toggle("ici", on); });
+}
+const rendre0 = rendre; rendre = function () { rendre0(); animer(); ici(); };
+addEventListener("scroll", ici, {passive:true});
+animer(); ici();
+</script>
+</body>
+</html>
