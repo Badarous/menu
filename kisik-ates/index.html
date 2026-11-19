@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Kısık Ateş — Menü</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --fond:#f7f2ea; --carte:#fffdf9; --encre:#2b211b; --doux:#7a6a5d; --accent:#b4542d; --vert:#25a35a; --ligne:#e8dfd3; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Inter,system-ui,sans-serif; background:var(--fond); color:var(--encre); }
+  .demo { background:#2b211b; color:#f7f2ea; font-size:13px; text-align:center; padding:8px 12px; }
+  header { padding:28px 20px 18px; max-width:640px; margin:auto; }
+  h1 { font-family:Lora,serif; font-size:34px; margin:0 0 4px; letter-spacing:-.5px; }
+  .sous { color:var(--doux); font-size:14px; line-height:1.6; }
+  .etoiles { color:#d99a1c; }
+  .boutons { display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; }
+  .btn { flex:1; min-width:140px; text-align:center; text-decoration:none; padding:12px 14px; border-radius:12px; font-weight:600; font-size:15px; }
+  .wa { background:var(--vert); color:#fff; }
+  .yol { background:var(--carte); color:var(--encre); border:1.5px solid var(--ligne); }
+  .langues { position:sticky; top:0; z-index:5; background:var(--fond); border-bottom:1px solid var(--ligne); }
+  .langues div { max-width:640px; margin:auto; display:flex; gap:6px; padding:10px 20px; overflow-x:auto; }
+  .langues div { scrollbar-width:none; } .langues div::-webkit-scrollbar { display:none; }
+  .langues button, .cats a { border:1.5px solid var(--ligne); background:var(--carte); color:var(--encre); border-radius:999px; padding:7px 14px; font:600 14px Inter,sans-serif; cursor:pointer; white-space:nowrap; text-decoration:none; }
+  .langues button.actif { background:var(--accent); border-color:var(--accent); color:#fff; }
+  .cats { display:flex; gap:6px; }
+  main { max-width:640px; margin:auto; padding:6px 20px 40px; }
+  h2 { font-family:Lora,serif; font-size:22px; margin:26px 0 10px; }
+  .plat { background:var(--carte); border:1px solid var(--ligne); border-radius:14px; padding:14px 16px; margin-bottom:10px; display:flex; justify-content:space-between; gap:12px; }
+  .plat b { display:block; font-size:16px; }
+  .plat p { margin:4px 0 0; color:var(--doux); font-size:14px; line-height:1.45; }
+  .prix { font-weight:700; color:var(--accent); white-space:nowrap; font-size:16px; }
+  .tag { display:inline-block; font-size:11px; font-weight:600; padding:2px 7px; border-radius:6px; margin-top:6px; margin-right:4px; background:#efe6da; color:#6b5444; }
+  .tag.vej { background:#e3f2e6; color:#2f7a45; }
+  .tag.oneri { background:#fbe9df; color:#a3461f; }
+  footer { max-width:640px; margin:auto; padding:0 20px 40px; color:var(--doux); font-size:13px; line-height:1.6; }
+</style>
+</head>
+<body>
+<div class="demo" data-t="demo"></div>
+<header>
+  <h1>Kısık Ateş</h1>
+  <div class="sous"><span class="etoiles">★★★★★</span> 4,9 · 152 Google <span data-t="yorum"></span><br><span data-t="slogan"></span><br>Tahılpazarı, Muratpaşa · <span data-t="saat"></span></div>
+  <div class="boutons">
+    <a class="btn wa" href="https://wa.me/905348232732" data-t="wa"></a>
+    <a class="btn yol" href="https://maps.google.com/?cid=4322424914856497181" data-t="yol"></a>
+  </div>
+</header>
+<nav class="langues"><div>
+  <button data-l="tr">TR</button><button data-l="ru">RU</button><button data-l="de">DE</button><button data-l="en">EN</button>
+  <span style="width:10px"></span>
+  <span class="cats" id="cats"></span>
+</div></nav>
+<main id="menu"></main>
+<footer data-t="pied"></footer>
+<script>
+const T = {
+  demo:{tr:"Taslak: fiyatlar örnektir, menünüzü gönderirseniz gerçek fiyatlarla güncellenir", ru:"Черновик: цены примерные", de:"Entwurf: Preise sind Beispiele", en:"Draft: prices are examples"},
+  yorum:{tr:"yorum", ru:"отзывов", de:"Bewertungen", en:"reviews"},
+  slogan:{tr:"Kısık ateşte, ev usulü. Aile işletmesi.", ru:"Домашняя кухня на медленном огне. Семейный ресторан.", de:"Hausmannskost auf kleiner Flamme. Familienbetrieb.", en:"Home cooking on a low flame. Family-run."},
+  saat:{tr:"18:30'a kadar açık", ru:"открыто до 18:30", de:"geöffnet bis 18:30", en:"open until 18:30"},
+  wa:{tr:"WhatsApp ile yaz", ru:"Написать в WhatsApp", de:"WhatsApp schreiben", en:"Message on WhatsApp"},
+  yol:{tr:"Yol tarifi", ru:"Как добраться", de:"Route", en:"Directions"},
+  pied:{tr:"Fiyatlara KDV dahildir. Servis ücreti alınmaz. Alerjen bilgisi için lütfen bize sorun.", ru:"Цены включают НДС. Плата за обслуживание не взимается. Об аллергенах спросите у нас.", de:"Preise inkl. MwSt. Keine Servicegebühr. Fragen Sie uns nach Allergenen.", en:"Prices include VAT. No service charge. Please ask us about allergens."},
+  vej:{tr:"Vejetaryen", ru:"Вегетарианское", de:"Vegetarisch", en:"Vegetarian"},
+  aci:{tr:"Acılı", ru:"Острое", de:"Scharf", en:"Spicy"},
+  oneri:{tr:"Yanına", ru:"К этому", de:"Dazu", en:"Add"}
+};
+const MENU = [
+  {id:"corba", ad:{tr:"Çorbalar", ru:"Супы", de:"Suppen", en:"Soups"}, plats:[
+    {ad:{tr:"Mercimek Çorbası", ru:"Чечевичный суп", de:"Linsensuppe", en:"Red Lentil Soup"}, d:{tr:"Limon ve ekmek ile", ru:"С лимоном и хлебом", de:"Mit Zitrone und Brot", en:"With lemon and bread"}, p:100, t:["vej"]},
+    {ad:{tr:"Ezogelin Çorbası", ru:"Суп Эзогелин", de:"Ezogelin-Suppe", en:"Ezogelin Soup"}, d:{tr:"Mercimek, bulgur, nane", ru:"Чечевица, булгур, мята", de:"Linsen, Bulgur, Minze", en:"Lentils, bulgur, mint"}, p:100, t:["vej"]}
+  ]},
+  {id:"ev", ad:{tr:"Ev Yemekleri", ru:"Домашние блюда", de:"Hausgerichte", en:"Home-Cooked Dishes"}, plats:[
+    {ad:{tr:"Kuru Fasulye & Pilav", ru:"Белая фасоль с рисом", de:"Weiße Bohnen mit Reis", en:"White Bean Stew with Rice"}, d:{tr:"Kısık ateşte pişmiş, tereyağlı pilav ile", ru:"Тушёная на медленном огне, с рисом на сливочном масле", de:"Langsam geschmort, mit Butterreis", en:"Slow-cooked, with buttered rice"}, p:220, t:[], o:{tr:"Ayran", ru:"Айран", de:"Ayran", en:"Ayran"}, op:40},
+    {ad:{tr:"Karnıyarık", ru:"Карныярык", de:"Karnıyarık", en:"Stuffed Aubergine"}, d:{tr:"Kıymalı patlıcan, domates sosu", ru:"Баклажан с фаршем и томатным соусом", de:"Aubergine mit Hackfleisch und Tomatensoße", en:"Aubergine with minced meat and tomato sauce"}, p:240, t:[]},
+    {ad:{tr:"Zeytinyağlı Taze Fasulye", ru:"Стручковая фасоль в оливковом масле", de:"Grüne Bohnen in Olivenöl", en:"Green Beans in Olive Oil"}, d:{tr:"Soğuk servis edilir", ru:"Подаётся холодным", de:"Kalt serviert", en:"Served cold"}, p:180, t:["vej"]}
+  ]},
+  {id:"et", ad:{tr:"Et Yemekleri", ru:"Мясные блюда", de:"Fleischgerichte", en:"Meat Dishes"}, plats:[
+    {ad:{tr:"Karışık Et Tabağı (2 kişilik)", ru:"Мясное ассорти (на двоих)", de:"Gemischte Fleischplatte (für 2)", en:"Mixed Meat Platter (for 2)"}, d:{tr:"Izgara köfte, tavuk, kuzu; pilav ve közlenmiş sebze", ru:"Кёфте, курица, баранина на гриле; рис и печёные овощи", de:"Köfte, Hähnchen, Lamm vom Grill; Reis und Grillgemüse", en:"Grilled köfte, chicken, lamb; rice and roasted vegetables"}, p:450, t:[]},
+    {ad:{tr:"Izgara Köfte", ru:"Кёфте на гриле", de:"Gegrillte Köfte", en:"Grilled Meatballs"}, d:{tr:"Piyaz ve közlenmiş biber ile", ru:"С салатом из фасоли и печёным перцем", de:"Mit Bohnensalat und Grillpaprika", en:"With bean salad and grilled pepper"}, p:280, t:["aci"]}
+  ]},
+  {id:"tost", ad:{tr:"Tostlar", ru:"Тосты", de:"Toasts", en:"Toasties"}, plats:[
+    {ad:{tr:"Kaşarlı Tost", ru:"Тост с сыром", de:"Käsetoast", en:"Cheese Toastie"}, d:{tr:"Köy ekmeği, kaşar", ru:"Деревенский хлеб, сыр кашар", de:"Landbrot, Kaşar-Käse", en:"Village bread, kashar cheese"}, p:150, t:["vej"], o:{tr:"Çay", ru:"Чай", de:"Tee", en:"Tea"}, op:20}
+  ]},
+  {id:"icecek", ad:{tr:"Tatlı & İçecek", ru:"Десерты и напитки", de:"Desserts & Getränke", en:"Dessert & Drinks"}, plats:[
+    {ad:{tr:"Fırın Sütlaç", ru:"Запечённый рисовый пудинг", de:"Ofen-Milchreis", en:"Baked Rice Pudding"}, d:{tr:"Ev yapımı", ru:"Домашний", de:"Hausgemacht", en:"Homemade"}, p:120, t:["vej"]},
+    {ad:{tr:"Çay", ru:"Чай", de:"Tee", en:"Turkish Tea"}, d:{tr:"İnce belli bardakta", ru:"В турецком стаканчике", de:"Im Tulpenglas", en:"In a tulip glass"}, p:20, t:[]},
+    {ad:{tr:"Ayran", ru:"Айран", de:"Ayran", en:"Ayran"}, d:{tr:"Soğuk, köpüklü", ru:"Холодный, с пенкой", de:"Kalt, schaumig", en:"Cold, frothy yoghurt drink"}, p:40, t:["vej"]}
+  ]}
+];
+let L = "tr";
+function rendre() {
+  document.documentElement.lang = L;
+  document.querySelectorAll("[data-t]").forEach(e => e.textContent = T[e.dataset.t][L]);
+  document.querySelectorAll("[data-l]").forEach(b => b.classList.toggle("actif", b.dataset.l === L));
+  document.getElementById("cats").innerHTML = MENU.map(c => `<a href="#${c.id}">${c.ad[L]}</a>`).join("");
+  document.getElementById("menu").innerHTML = MENU.map(c => `<h2 id="${c.id}">${c.ad[L]}</h2>` + c.plats.map(p =>
+    `<div class="plat"><div><b>${p.ad[L]}</b><p>${p.d[L]}</p>${p.t.map(t => `<span class="tag ${t}">${T[t][L]}</span>`).join("")}${p.o ? `<span class="tag oneri">+ ${T.oneri[L]}: ${p.o[L]} ${p.op} ₺</span>` : ""}</div><div class="prix">${p.p} ₺</div></div>`).join("")).join("");
+}
+document.querySelectorAll("[data-l]").forEach(b => b.onclick = () => { L = b.dataset.l; rendre(); });
+rendre();
+</script>
+</body>
+</html>
