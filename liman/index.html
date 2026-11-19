@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Antalya Liman Cafe & Restaurant — Menü</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --fond:#f1f5f8; --carte:#fbfdff; --encre:#14283a; --doux:#566a7c; --accent:#1f5f8b; --vert:#25a35a; --ligne:#e8dfd3; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Inter,system-ui,sans-serif; background:var(--fond); color:var(--encre); }
+  .demo { background:#14283a; color:#fff; font-size:13px; text-align:center; padding:8px 12px; }
+  header { padding:28px 20px 18px; max-width:640px; margin:auto; }
+  h1 { font-family:Lora,serif; font-size:34px; margin:0 0 4px; letter-spacing:-.5px; }
+  .sous { color:var(--doux); font-size:14px; line-height:1.6; }
+  .etoiles { color:#d99a1c; }
+  .boutons { display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; }
+  .btn { flex:1; min-width:140px; text-align:center; text-decoration:none; padding:12px 14px; border-radius:12px; font-weight:600; font-size:15px; }
+  .wa { background:var(--vert); color:#fff; }
+  .yol { background:var(--carte); color:var(--encre); border:1.5px solid var(--ligne); }
+  .langues { position:sticky; top:0; z-index:5; background:var(--fond); border-bottom:1px solid var(--ligne); }
+  .langues div { max-width:640px; margin:auto; display:flex; gap:6px; padding:10px 20px; overflow-x:auto; }
+  .langues div { scrollbar-width:none; } .langues div::-webkit-scrollbar { display:none; }
+  .langues button, .cats a { border:1.5px solid var(--ligne); background:var(--carte); color:var(--encre); border-radius:999px; padding:7px 14px; font:600 14px Inter,sans-serif; cursor:pointer; white-space:nowrap; text-decoration:none; }
+  .langues button.actif { background:var(--accent); border-color:var(--accent); color:#fff; }
+  .cats { display:flex; gap:6px; }
+  main { max-width:640px; margin:auto; padding:6px 20px 40px; }
+  h2 { font-family:Lora,serif; font-size:22px; margin:26px 0 10px; }
+  .plat { background:var(--carte); border:1px solid var(--ligne); border-radius:14px; padding:14px 16px; margin-bottom:10px; display:flex; justify-content:space-between; gap:12px; }
+  .plat b { display:block; font-size:16px; }
+  .plat p { margin:4px 0 0; color:var(--doux); font-size:14px; line-height:1.45; }
+  .prix { font-weight:700; color:var(--accent); white-space:nowrap; font-size:16px; }
+  .tag { display:inline-block; font-size:11px; font-weight:600; padding:2px 7px; border-radius:6px; margin-top:6px; margin-right:4px; background:#efe6da; color:#6b5444; }
+  .tag.vej { background:#eef5e0; color:#4f6b1f; }
+  .tag.vegan { background:#d9f0d5; color:#2b6b27; }
+  .langues button.filtre.actif { background:#2b6b27; border-color:#2b6b27; color:#fff; }
+  .vide { color:var(--doux); font-size:14px; }
+  .tag.oneri { background:#fbe9df; color:#a3461f; }
+  footer { max-width:640px; margin:auto; padding:0 20px 40px; color:var(--doux); font-size:13px; line-height:1.6; }
+  html { scroll-behavior:smooth; scroll-padding-top:64px; }
+  .cats a.ici { background:var(--encre); border-color:var(--encre); color:var(--fond); }
+  .btn, .langues button, .cats a { transition:transform .12s, background .2s, color .2s; }
+  .btn:active, .langues button:active, .cats a:active { transform:scale(.96); }
+  .plat { transition:opacity .45s ease, transform .45s ease; }
+  .plat.cache { opacity:0; transform:translateY(14px); }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } .plat, .btn, .langues button, .cats a { transition:none; } .plat.cache { opacity:1; transform:none; } }
+</style>
+</head>
+<body>
+<div class="demo" data-t="demo"></div>
+<header>
+  <h1>Antalya Liman Cafe & Restaurant</h1>
+  <div class="sous"><span class="etoiles">★★★★★</span> 3,9 · 170 Google <span data-t="yorum"></span><br><span data-t="slogan"></span><br>Selçuk Mah., Kaleiçi Yat Limanı, Muratpaşa · <span data-t="saat"></span></div>
+  <div class="boutons">
+    <a class="btn wa" href="https://wa.me/905469630604" data-t="wa"></a>
+    <a class="btn yol" href="https://www.google.com/maps/search/?api=1&query=Antalya+Liman+Cafe+%26+Restaurant" data-t="yol"></a>
+  </div>
+</header>
+<nav class="langues"><div>
+  <button data-l="tr">TR</button><button data-l="en">EN</button><button data-l="de">DE</button><button data-l="ru">RU</button>
+  <button class="filtre" id="filtre" data-t="seulvegan" hidden></button>
+  <span style="width:10px"></span>
+  <span class="cats" id="cats"></span>
+</div></nav>
+<main id="menu"></main>
+<footer data-t="pied"></footer>
+<script>
+const T = {
+  demo:{tr:"Taslak: fiyatlar Google'daki menünüzden (pizza fiyatları Google'da 4 TL görünüyor, kontrol edin)", ru:"Черновик: цены из вашего меню в Google", de:"Entwurf: Preise aus Ihrem Google-Menü", en:"Draft: prices from your Google menu"},
+  yorum:{tr:"yorum", ru:"отзывов", de:"Bewertungen", en:"reviews"},
+  slogan:{tr:"Kaleiçi limanında, deniz manzarasıyla balık, steak ve kahvaltı.", ru:"Рыба, стейки и завтраки с видом на гавань Калеичи.", de:"Fisch, Steaks und Frühstück mit Blick auf den Hafen von Kaleiçi.", en:"Fish, steaks and breakfast with a view of Kaleiçi harbour."},
+  saat:{tr:"Limanın hemen yanında", ru:"Прямо у гавани", de:"Direkt am Hafen", en:"Right by the harbour"},
+  wa:{tr:"WhatsApp ile yaz", ru:"Написать в WhatsApp", de:"WhatsApp schreiben", en:"Message on WhatsApp"},
+  yol:{tr:"Yol tarifi", ru:"Как добраться", de:"Route", en:"Directions"},
+  pied:{tr:"Fiyatlara KDV dahildir. Alerjen bilgisi için lütfen bize sorun.", ru:"Цены включают НДС. Об аллергенах спросите у нас.", de:"Preise inkl. MwSt. Fragen Sie uns nach Allergenen.", en:"Prices include VAT. Please ask us about allergens."},
+  vegan:{tr:"Vegan", ru:"Веган", de:"Vegan", en:"Vegan"},
+  vej:{tr:"Vejetaryen", ru:"Вегетарианское", de:"Vegetarisch", en:"Vegetarian"},
+  aci:{tr:"Acılı", ru:"Острое", de:"Scharf", en:"Spicy"},
+  oneri:{tr:"Yanına", ru:"К этому", de:"Dazu", en:"Add"},
+  seulvegan:{tr:"🌱 Sadece vegan", ru:"🌱 Только веган", de:"🌱 Nur vegan", en:"🌱 Vegan only"},
+  vide:{tr:"Bu bölümde vegan yemek yok.", ru:"В этом разделе нет веганских блюд.", de:"In diesem Bereich gibt es keine veganen Gerichte.", en:"No vegan dishes in this section."}
+};
+const MENU = [
+  {id:"deniz", ad:{tr:"Deniz Ürünleri", ru:"Морепродукты", de:"Meeresfrüchte", en:"Seafood"}, plats:[
+    {ad:{tr:"Çupra Izgara", ru:"Дорадо на гриле", de:"Gegrillte Dorade", en:"Grilled Sea Bream"}, d:{tr:"Salata ve limon ile", ru:"С салатом и лимоном", de:"Mit Salat und Zitrone", en:"With salad and lemon"}, p:600, t:[]},
+    {ad:{tr:"Levrek Izgara", ru:"Сибас на гриле", de:"Gegrillter Wolfsbarsch", en:"Grilled Sea Bass"}, d:{tr:"Salata ve limon ile", ru:"С салатом и лимоном", de:"Mit Salat und Zitrone", en:"With salad and lemon"}, p:600, t:[]},
+    {ad:{tr:"Kalamar Izgara", ru:"Кальмар на гриле", de:"Gegrillter Tintenfisch", en:"Grilled Calamari"}, d:{tr:"Izgarada, limonlu", ru:"На гриле, с лимоном", de:"Vom Grill, mit Zitrone", en:"Grilled, with lemon"}, p:700, t:[]},
+    {ad:{tr:"Somon Izgara", ru:"Лосось на гриле", de:"Gegrillter Lachs", en:"Grilled Salmon"}, d:{tr:"Garnitür ile", ru:"С гарниром", de:"Mit Beilage", en:"With side"}, p:750, t:[]},
+    {ad:{tr:"Karides Izgara", ru:"Креветки на гриле", de:"Gegrillte Garnelen", en:"Grilled Prawns"}, d:{tr:"Domates ve sarımsakla güveçte", ru:"В глиняном горшочке с томатами и чесноком", de:"Im Tontopf mit Tomate und Knoblauch", en:"In a clay pot with tomato and garlic"}, p:750, t:[]}
+  ]},
+  {id:"corba", ad:{tr:"Çorbalar", ru:"Супы", de:"Suppen", en:"Soups"}, plats:[
+    {ad:{tr:"Günün Çorbası", ru:"Суп дня", de:"Tagessuppe", en:"Soup of the Day"}, d:{tr:"Her gün farklı", ru:"Каждый день новый", de:"Jeden Tag anders", en:"Different every day"}, p:250, t:[]},
+    {ad:{tr:"Balık Çorbası", ru:"Рыбный суп", de:"Fischsuppe", en:"Fish Soup"}, d:{tr:"Günlük balıkla", ru:"Из свежей рыбы", de:"Mit frischem Fisch", en:"Made with fresh fish"}, p:300, t:[]}
+  ]},
+  {id:"pizza", ad:{tr:"Pizzalar", ru:"Пицца", de:"Pizza", en:"Pizza"}, plats:[
+    {ad:{tr:"Margarita", ru:"Маргарита", de:"Margherita", en:"Margherita"}, d:{tr:"Domates sos, mozzarella", ru:"Томатный соус, моцарелла", de:"Tomatensoße, Mozzarella", en:"Tomato sauce, mozzarella"}, p:"", t:["vej"]},
+    {ad:{tr:"Sucuklu Pizza", ru:"Пицца с суджуком", de:"Sucuk-Pizza", en:"Pepperoni Pizza"}, d:{tr:"Dana sucuk, mozzarella", ru:"Говяжий суджук, моцарелла", de:"Rinder-Sucuk, Mozzarella", en:"Beef sucuk, mozzarella"}, p:"", t:[]},
+    {ad:{tr:"Karışık Pizza", ru:"Пицца ассорти", de:"Gemischte Pizza", en:"Mixed Pizza"}, d:{tr:"Sucuk, mantar, biber, zeytin", ru:"Суджук, грибы, перец, оливки", de:"Sucuk, Pilze, Paprika, Oliven", en:"Sucuk, mushrooms, peppers, olives"}, p:"", t:[]},
+    {ad:{tr:"Ton Balıklı Pizza", ru:"Пицца с тунцом", de:"Thunfisch-Pizza", en:"Tuna Pizza"}, d:{tr:"Ton balığı, mısır, soğan", ru:"Тунец, кукуруза, лук", de:"Thunfisch, Mais, Zwiebel", en:"Tuna, sweetcorn, onion"}, p:"", t:[]}
+  ]},
+  {id:"kahvalti", ad:{tr:"Kahvaltı", ru:"Завтрак", de:"Frühstück", en:"Breakfast"}, plats:[
+    {ad:{tr:"Kahvaltı Tabağı", ru:"Тарелка завтрака", de:"Frühstücksteller", en:"Breakfast Plate"}, d:{tr:"Peynir, zeytin, yumurta, domates, salatalık", ru:"Сыр, оливки, яйцо, томаты, огурцы", de:"Käse, Oliven, Ei, Tomate, Gurke", en:"Cheese, olives, egg, tomato, cucumber"}, p:500, t:["vej"]},
+    {ad:{tr:"Serpme Kahvaltı (2 kişilik)", ru:"Турецкий завтрак на двоих", de:"Türkisches Frühstück für 2", en:"Turkish Breakfast Spread for 2"}, d:{tr:"Zengin serpme kahvaltı", ru:"Большой турецкий завтрак", de:"Reichhaltiges Frühstück", en:"A full Turkish spread"}, p:1200, t:["vej"]}
+  ]}
+];
+let L = "tr", V = false;
+function rendre() {
+  document.documentElement.lang = L;
+  document.querySelectorAll("[data-t]").forEach(e => e.textContent = T[e.dataset.t][L]);
+  document.querySelectorAll("[data-l]").forEach(b => b.classList.toggle("actif", b.dataset.l === L));
+  document.getElementById("filtre").classList.toggle("actif", V);
+  document.getElementById("cats").innerHTML = MENU.map(c => `<a href="#${c.id}">${c.ad[L]}</a>`).join("");
+  document.getElementById("menu").innerHTML = MENU.map(c => {
+    const ps = c.plats.filter(p => !V || p.t.includes("vegan"));
+    return `<h2 id="${c.id}">${c.ad[L]}</h2>` + (ps.length ? ps.map(p =>
+      `<div class="plat"><div><b>${p.ad[L]}</b><p>${p.d[L]}</p>${p.t.map(t => `<span class="tag ${t}">${T[t][L]}</span>`).join("")}${p.o ? `<span class="tag oneri">+ ${T.oneri[L]}: ${p.o[L]} ${p.op} ₺</span>` : ""}</div><div class="prix">${p.p ? p.p + " ₺" : ""}</div></div>`).join("") : `<p class="vide">${T.vide[L]}</p>`);
+  }).join("");
+}
+document.querySelectorAll("[data-l]").forEach(b => b.onclick = () => { L = b.dataset.l; rendre(); });
+document.getElementById("filtre").onclick = () => { V = !V; rendre(); };
+rendre();
+// vivant : apparition douce des plats + catégorie en cours allumée
+const vu = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.remove("cache"); vu.unobserve(e.target); } }), {rootMargin:"0px 0px -8% 0px"});
+function animer() { document.querySelectorAll(".plat").forEach(p => { if (p.getBoundingClientRect().top > innerHeight) { p.classList.add("cache"); vu.observe(p); } }); }
+function ici() {
+  let id = MENU[0].id;
+  MENU.forEach(c => { const h = document.getElementById(c.id); if (h && h.getBoundingClientRect().top < 120) id = c.id; });
+  document.querySelectorAll(".cats a").forEach(a => { const on = a.getAttribute("href") === "#" + id; if (on && scrollY > 50 && !a.classList.contains("ici")) a.scrollIntoView({block:"nearest", inline:"center"}); a.classList.toggle("ici", on); });
+}
+const rendre0 = rendre; rendre = function () { rendre0(); animer(); ici(); };
+addEventListener("scroll", ici, {passive:true});
+animer(); ici();
+</script>
+</body>
+</html>
