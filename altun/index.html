@@ -188,7 +188,7 @@ const tx = o => (o && (o[L] || o.tr)) || "";
 function dessine() {
   const m = document.getElementById("menu");
   m.innerHTML = MENU.map((c, i) => {
-    const formules = i === 0 && c.plats.length && c.plats.every(p => tx(p.d));
+    const formules = c.plats.length && c.plats.every(p => tx(p.d)) && (i === 0 || c.plats.some(p => p.img));
     const corps = formules
       ? '<div class="formules">' + c.plats.map((p, k) => `<div class="formule${p.img ? " ph" : ""}" style="transition-delay:${k*90}ms">${p.img ? `<img src="${esc(p.img)}" alt="" loading="lazy">` : ""}<div class="haut"><b>${esc(tx(p.ad))}</b><span class="prix">${p.p ? esc(p.p) + " ₺" : ""}</span></div><p>${esc(tx(p.d))}</p></div>`).join("") + '</div>'
       : c.plats.map((p, k) => `<div class="plat" style="transition-delay:${Math.min(k,8)*55}ms"><div class="haut"><b>${esc(tx(p.ad))}</b>${p.p ? '<span class="points"></span>' : ""}<span class="prix">${p.p ? esc(p.p) + " ₺" : ""}</span></div>${tx(p.d) ? `<p>${esc(tx(p.d))}</p>` : ""}${(p.t||[]).map(t => T[t] ? `<span class="tag">${esc(tx(T[t]))}</span>` : "").join("")}</div>`).join("");
